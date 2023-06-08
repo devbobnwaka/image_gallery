@@ -7,6 +7,7 @@ Username
 Password
 Email
 Other relevant user information
+
 Image Table:
 
 Image_ID (Primary Key)
@@ -16,15 +17,18 @@ Title
 Description
 Upload_Date
 Other relevant image information
+
 Tag Table:
 
 Tag_ID (Primary Key)
 Tag_Name (Unique)
 Other relevant tag information
+
 Image_Tag Table (Many-to-Many Relationship):
 
 Image_ID (Foreign Key referencing Image Table)
 Tag_ID (Foreign Key referencing Tag Table)
+
 Share Table:
 
 Share_ID (Primary Key)
