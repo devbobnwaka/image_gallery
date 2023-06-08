@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     ## External package
     'rest_framework',
+    'rest_framework.authtoken',
     ## Internal apps
     'authentication',
     'gallery',
