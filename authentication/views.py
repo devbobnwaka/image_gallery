@@ -1,11 +1,14 @@
 from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.authtoken.models import Token
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
-
-from .authentication import BearerAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
+
+from .authentication import BearerTokenAuthentication
+from .serializers import UserSerializer
+from .models import User
 
 # Create your views here.
 class EmailAuthToken(APIView):
@@ -28,10 +31,20 @@ class EmailAuthToken(APIView):
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class LogOutViewAPI(APIView):
-    authentication_classes = [BearerAuthentication]
+    authentication_classes = [BearerTokenAuthentication]
     permission_classes = [IsAuthenticated]
     
     def post(self, request, *args, **kwargs):
         token = request.auth
         Token.objects.filter(key=token).delete()
         return Response({"message":"Logout successfully"})
+
+
+class RegisterUserAPI(CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserRetrieveUpdateAPI(RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+

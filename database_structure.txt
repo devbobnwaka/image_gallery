@@ -46,3 +46,11 @@ Other relevant search information
 This basic design allows for users to have accounts, upload images, add descriptions and tags to images, and share images with other users. The Image_Tag table enables tagging multiple tags to a single image, and the Share table facilitates sharing images with specific users along with permission levels. The Search table tracks user search queries for later analysis or recommendation purposes.
 
 Note that this is a simplified design, and depending on the specific requirements of your image gallery, you may need to add more tables or modify the existing ones. Additionally, database optimizations, such as indexing and caching, should be considered to enhance performance.
+
+
+
+############ TODOS ##########
+
+watch generators video and write on linkedIN
+upload image
+
