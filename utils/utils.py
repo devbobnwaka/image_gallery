@@ -1,11 +1,16 @@
-import random
+import random, uuid, io, base64
 from django.utils.text import slugify
+
+from PIL import Image, ImageFilter
 
 def slugify_instance_title(instance, save=False, new_slug=None):
     if new_slug is not None:
         slug = new_slug
     else:
-        slug = slugify(instance.title)
+        if instance.title:
+            slug = slugify(instance.title)
+        else:
+            slug = slugify(uuid.uuid1())
     Klass = instance.__class__
     qs = Klass.objects.filter(slug=slug).exclude(id=instance.id)
     if qs.exists():
@@ -20,6 +25,23 @@ def slugify_instance_title(instance, save=False, new_slug=None):
 
 
 def get_filtered_image(image, action):
-    if action == "NO_FIlTER":
-        filtered = image
-    return filtered
+    img = Image.open(image)
+    # print(img.format, img.size, img.mode)
+    filtered_image=None
+    if action == "NO_FILTER":
+        filtered_image = img
+    if action == "BLUR":
+        filtered_image = img.filter(ImageFilter.BLUR)
+
+    # Convert the filtered image to bytes
+    filtered_image_bytes = io.BytesIO()
+    filtered_image.save(filtered_image_bytes, format=img.format)
+    filtered_image_bytes.seek(0)
+    # Encode the image data as base64
+    encoded_image = base64.b64encode(filtered_image_bytes.getvalue()).decode('utf-8')
+    src = f"data:image/{img.format.lower()};base64,{encoded_image}"
+    # # Generate HTML to display the image
+    # html = f'<img src="{src}">'
+    # # Display the HTML
+    # print(html)
+    return src 

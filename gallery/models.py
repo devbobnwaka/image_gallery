@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
 from settings.base import AUTH_USER_MODEL
 User = AUTH_USER_MODEL
@@ -27,18 +28,20 @@ class Image(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
 
+    def get_absolute_url(self):
+        return reverse('image-detail', kwargs={"slug": self.slug})
+
     def __str__(self):
         return f'{self.title}'
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
 
 
 def image_pre_save(sender, instance, *args, **kwargs):
 # print('pre_save')
     if instance.slug is None:
         slugify_instance_title(instance, save=False)
-
+        filtered_img = get_filtered_image(instance.image_path, instance.action)
+        print(filtered_img)
+        
 pre_save.connect(image_pre_save, sender=Image)
 
 def image_post_save(sender, instance, created, *args, **kwargs):
