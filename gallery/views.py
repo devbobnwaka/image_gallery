@@ -1,12 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from authentication.authentication import BearerTokenAuthentication
 from .models import Image
 from .serializers import ImageSerializer, ListImageSerializer
 from utils.utils import get_filtered_image
+
+
 # Create your views here.
 
 class ImageListAPIView(ListAPIView):
@@ -14,6 +16,7 @@ class ImageListAPIView(ListAPIView):
     serializer_class = ListImageSerializer
     authentication_classes = [BearerTokenAuthentication]
     permission_classes = [IsAuthenticated]
+
 
 class ImageCreateAPIView(CreateAPIView):
     queryset = Image.objects.all()
@@ -26,7 +29,7 @@ class ImageCreateAPIView(CreateAPIView):
         return Image.objects.filter(user=user)
 
     
-class ImageDetailAPIView(RetrieveAPIView):
+class ImageRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
     lookup_field = 'slug'

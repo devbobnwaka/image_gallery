@@ -5,7 +5,7 @@ from .models import Image
 from utils.utils import get_filtered_image
 
 class ListImageSerializer(serializers.ModelSerializer):
-    detail_url = serializers.HyperlinkedIdentityField(view_name='image-detail', lookup_field='slug')
+    detail_url = serializers.HyperlinkedIdentityField(view_name='image-retrieve-update', lookup_field='slug')
     class Meta:
         model = Image
         fields = (
@@ -44,4 +44,10 @@ class ImageSerializer(serializers.ModelSerializer):
         image = Image.objects.create(**validated_data, user=user) 
         return image
 
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.action = validated_data.get('action', instance.action)
+        instance.image_path = validated_data.get('image_path', instance.image_path)
+        instance.description = validated_data.get('description', instance.description)
+        return instance
 
