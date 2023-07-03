@@ -18,6 +18,7 @@ class Image(models.Model):
         ("EDGE_ENHANCE_MORE", "Edge Enhance More"),
         ("SHARPEN", "Sharpen"),
         ("SMOOTH", "Smooth"),
+        ("GRAY", "Gray"),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50, null=True, blank=True)

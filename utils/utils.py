@@ -32,6 +32,23 @@ def get_filtered_image(image, action):
         filtered_image = img
     if action == "BLUR":
         filtered_image = img.filter(ImageFilter.BLUR)
+    if action == "CONTOUR":
+        filtered_image = img.filter(ImageFilter.CONTOUR)
+    if action == "EDGE_ENHANCE":
+        filtered_image = img.filter(ImageFilter.EDGE_ENHANCE)
+    if action == "SHARPEN":
+        filtered_image = img.filter(ImageFilter.SHARPEN)
+    if action == "SMOOTH":
+        filtered_image = img.filter(ImageFilter.SMOOTH)
+    if action == "GRAY":
+        filtered_image = img.convert("L")
+
+
+        # ("CONTOUR", "Contour"),
+        # ("EDGE_ENHANCE", "Edge Enhance"),
+        # ("EDGE_ENHANCE_MORE", "Edge Enhance More"),
+        # ("SHARPEN", "Sharpen"),
+        # ("SMOOTH", "Smooth"),
 
     # Convert the filtered image to bytes
     filtered_image_bytes = io.BytesIO()
