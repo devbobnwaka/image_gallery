@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from authentication.authentication import BearerTokenAuthentication
 from .models import Image
 from .serializers import ImageSerializer, ListImageSerializer
+from .permissions import IsOwnerOrReadOnly
 from utils.utils import get_filtered_image
 
 
@@ -32,6 +33,8 @@ class ImageCreateAPIView(CreateAPIView):
 class ImageRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
+    authentication_classes = [BearerTokenAuthentication]
+    permission_classes = [IsOwnerOrReadOnly]
     lookup_field = 'slug'
 
 
