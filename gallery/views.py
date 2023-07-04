@@ -18,6 +18,10 @@ class ImageListAPIView(ListAPIView):
     authentication_classes = [BearerTokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        user = self.request.user
+        return Image.objects.filter(user=user)
+
 
 class ImageCreateAPIView(CreateAPIView):
     queryset = Image.objects.all()
@@ -25,11 +29,7 @@ class ImageCreateAPIView(CreateAPIView):
     authentication_classes = [BearerTokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        user = self.request.user
-        return Image.objects.filter(user=user)
-
-    
+       
 class ImageRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer

@@ -1,6 +1,7 @@
 import io
 from rest_framework import serializers
 
+from authentication.serializers import UserPublicSerializer
 from .models import Image
 from utils.utils import get_filtered_image
 
@@ -16,11 +17,12 @@ class ListImageSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    owner = UserPublicSerializer(source='user', read_only = True)
     encoded_filter_image = serializers.SerializerMethodField()
     class Meta:
         model = Image
         fields = (
-            'user',
+            'owner',
             'title',
             'slug',
             'action',
@@ -29,7 +31,7 @@ class ImageSerializer(serializers.ModelSerializer):
             'encoded_filter_image'
         )
         extra_kwargs = {
-            'user': {'read_only': True},
+            # 'user': {'read_only': True},
             'slug': {'read_only': True},
             'title': {'required' : False},
             'description': {'required' : False},

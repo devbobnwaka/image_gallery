@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     ## External package
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_yasg',
     ## Internal apps
     'authentication',
     'gallery',
