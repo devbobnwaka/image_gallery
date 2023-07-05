@@ -121,7 +121,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'authentication.User'
 
 
-ALLOWED_HOSTS = ['image-gallery-15yy.onrender.com']
+ALLOWED_HOSTS = ['image-gallery-15yy.onrender.com', '127.0.0.1']
 
 # CORS_ALLOW_ALL_ORIGINS = True
 
